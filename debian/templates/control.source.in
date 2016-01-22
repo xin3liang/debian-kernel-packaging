@@ -1,7 +1,6 @@
 Section: kernel
 Priority: optional
-Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
-Uploaders: Bastian Blank <waldi@debian.org>, maximilian attems <maks@debian.org>, Ben Hutchings <ben@decadent.org.uk>
+Maintainer: 96Boards Team <dev@lists.96boards.org>
 Standards-Version: 3.9.8
 Build-Depends:
  debhelper,
@@ -64,6 +63,6 @@ Build-Depends-Indep:
  python-sphinx <!stage1 !nodoc>,
  python-sphinx-rtd-theme <!stage1 !nodoc>,
  xmlto <!stage1 !nodoc>,
-Vcs-Git: https://anonscm.debian.org/git/kernel/linux.git
-Vcs-Browser: https://anonscm.debian.org/cgit/kernel/linux.git
+Vcs-Git: https://github.com/Linaro/debian-kernel-packaging.git
+Vcs-Browser: https://github.com/Linaro/debian-kernel-packaging.git
 Homepage: https://www.kernel.org/
