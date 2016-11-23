@@ -4,7 +4,7 @@ featuresets:
  none
 
 [build]
-debug-info: true
+debug-info: false
 image-file: arch/arm64/boot/Image
 vdso: true
 
