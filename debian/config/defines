@@ -65,3 +65,6 @@ gcc-4.9: gcc-4.9 <!stage1 !cross>, gcc-4.9-@gnu-type-package@:native <!stage1 cr
 # initramfs-generators
 initramfs-fallback: linux-initramfs-tool
 initramfs-tools: initramfs-tools (>= 0.110~)
+
+[packages]
+docs: false
