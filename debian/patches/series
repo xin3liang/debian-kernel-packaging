@@ -130,3 +130,6 @@ bugfix/all/liblockdep-enable-wall-by-default.patch
 bugfix/all/liblockdep-fix-unused-value-warnings.patch
 bugfix/all/liblockdep-fix-set-but-not-used-warnings.patch
 bugfix/all/liblockdep-fix-defined-but-not-used-warning-for-init.patch
+
+# Linaro
+linaro/0001-arm64-prefer-ACPI-by-default.patch
