@@ -133,3 +133,4 @@ bugfix/all/liblockdep-fix-defined-but-not-used-warning-for-init.patch
 
 # Linaro
 linaro/0001-arm64-prefer-ACPI-by-default.patch
+linaro/0001-DISTROHACK-acpi-spcr-remove-baud-rate-handling.patch
