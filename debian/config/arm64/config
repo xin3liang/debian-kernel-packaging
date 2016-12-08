@@ -115,6 +115,11 @@ CONFIG_MSM_GCC_8996=y
 CONFIG_MSM_MMCC_8996=y
 
 ##
+## file: drivers/clocksource/Kconfig
+##
+CONFIG_HISILICON_ERRATUM_161601=y
+
+##
 ## file: drivers/cpuidle/Kconfig.arm
 ##
 CONFIG_ARM_CPUIDLE=y
