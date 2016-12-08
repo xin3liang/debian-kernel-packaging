@@ -660,6 +660,16 @@ CONFIG_SPMI=y
 CONFIG_SPMI_MSM_PMIC_ARB=y
 
 ##
+## file: drivers/tee/Kconfig
+##
+CONFIG_TEE=m
+
+##
+## file: drivers/tee/optee/Kconfig
+##
+CONFIG_OPTEE=m
+
+##
 ## file: drivers/thermal/Kconfig
 ##
 CONFIG_THERMAL=y
