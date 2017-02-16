@@ -180,12 +180,12 @@ CONFIG_GPIO_XGENE_SB=m
 ##
 ## file: drivers/gpu/drm/Kconfig
 ##
-CONFIG_DRM=m
+CONFIG_DRM=y
 
 ##
 ## file: drivers/gpu/drm/bridge/adv7511/Kconfig
 ##
-CONFIG_DRM_I2C_ADV7511=m
+CONFIG_DRM_I2C_ADV7511=y
 CONFIG_DRM_I2C_ADV7511_AUDIO=y
 
 ##
@@ -196,7 +196,7 @@ CONFIG_DRM_HISI_HIBMC=m
 ##
 ## file: drivers/gpu/drm/hisilicon/kirin/Kconfig
 ##
-CONFIG_DRM_HISI_KIRIN=m
+CONFIG_DRM_HISI_KIRIN=y
 
 ##
 ## file: drivers/gpu/drm/msm/Kconfig
