@@ -69,6 +69,11 @@ CONFIG_AHCI_TEGRA=m
 CONFIG_AHCI_XGENE=m
 
 ##
+## file: drivers/base/Kconfig
+##
+CONFIG_DMA_CMA=y
+
+##
 ## file: drivers/bluetooth/Kconfig
 ##
 CONFIG_BT_HCIUART=m
