@@ -14,10 +14,10 @@
 /files
 /hyperv-daemons/
 /libcpupower*/
-/liblockdep*/
 /libusbip-dev/
 /linux-*
-/lockdep/
+!/linux-cpupower.install
+!/linux-cpupower.manpages
 /po/
 /rules.gen
 /stamps/

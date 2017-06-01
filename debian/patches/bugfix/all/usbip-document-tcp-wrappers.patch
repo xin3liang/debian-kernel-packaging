@@ -7,7 +7,7 @@ Add references to TCP wrappers configuration in the manual page.
 
 --- a/tools/usb/usbip/doc/usbipd.8
 +++ b/tools/usb/usbip/doc/usbipd.8
-@@ -14,7 +14,8 @@ Devices have to explicitly be exported u
+@@ -14,7 +14,8 @@
  before usbipd makes them available to other hosts.
  
  The daemon accepts connections from USB/IP clients
@@ -17,7 +17,7 @@ Add references to TCP wrappers configuration in the manual page.
  
  .SH OPTIONS
  .HP
-@@ -69,7 +70,8 @@ Show version.
+@@ -69,7 +70,8 @@
  
  .B usbipd
  offers no authentication or authorization for USB/IP. Any

@@ -5,10 +5,13 @@ CONFIG_OPROFILE=m
 CONFIG_KPROBES=y
 CONFIG_JUMP_LABEL=y
 # CONFIG_STATIC_KEYS_SELFTEST is not set
+#. Until we work out how to package them
+# CONFIG_GCC_PLUGINS is not set
 ## choice: Stack Protector buffer overflow detection
 CONFIG_CC_STACKPROTECTOR_STRONG=y
 ## end choice
 CONFIG_VMAP_STACK=y
+CONFIG_STRICT_KERNEL_RWX=y
 
 ##
 ## file: block/Kconfig
@@ -19,6 +22,8 @@ CONFIG_BLK_DEV_BSG=y
 CONFIG_BLK_DEV_INTEGRITY=y
 CONFIG_BLK_DEV_THROTTLING=y
 # CONFIG_BLK_CMDLINE_PARSER is not set
+CONFIG_BLK_WBT=y
+CONFIG_BLK_WBT_MQ=y
 
 ##
 ## file: block/Kconfig.iosched
@@ -107,7 +112,8 @@ CONFIG_CRYPTO_RMD256=m
 CONFIG_CRYPTO_RMD320=m
 CONFIG_CRYPTO_SHA1=m
 # CONFIG_CRYPTO_SHA1_MB is not set
-CONFIG_CRYPTO_SHA256=m
+#. Must be built-in for IMA_DEFAULT_HASH_SHA256
+CONFIG_CRYPTO_SHA256=y
 CONFIG_CRYPTO_SHA512=m
 CONFIG_CRYPTO_TGR192=m
 CONFIG_CRYPTO_WP512=m
@@ -161,6 +167,7 @@ CONFIG_ACPI_TABLE_UPGRADE=y
 # CONFIG_ACPI_BGRT is not set
 # CONFIG_ACPI_REDUCED_HARDWARE_ONLY is not set
 # CONFIG_PMIC_OPREGION is not set
+# CONFIG_ACPI_CONFIGFS is not set
 
 ##
 ## file: drivers/acpi/nfit/Kconfig
@@ -195,6 +202,7 @@ CONFIG_SATA_QSTOR=m
 CONFIG_SATA_SX4=m
 CONFIG_ATA_BMDMA=y
 CONFIG_ATA_PIIX=m
+# CONFIG_SATA_DWC is not set
 # CONFIG_SATA_HIGHBANK is not set
 CONFIG_SATA_MV=m
 CONFIG_SATA_NV=m
@@ -287,7 +295,8 @@ CONFIG_EXTRA_FIRMWARE=""
 CONFIG_ALLOW_DEV_COREDUMP=y
 # CONFIG_DEBUG_DRIVER is not set
 # CONFIG_DEBUG_DEVRES is not set
-# CONFIG_FENCE_TRACE is not set
+# CONFIG_DEBUG_TEST_DRIVER_REMOVE is not set
+# CONFIG_DMA_FENCE_TRACE is not set
 
 ##
 ## file: drivers/bcma/Kconfig
@@ -353,6 +362,8 @@ CONFIG_BT_HCIUART_3WIRE=y
 CONFIG_BT_HCIUART_INTEL=y
 CONFIG_BT_HCIUART_BCM=y
 CONFIG_BT_HCIUART_QCA=y
+CONFIG_BT_HCIUART_AG6XX=y
+CONFIG_BT_HCIUART_MRVL=y
 # CONFIG_BT_HCIBTUART is not set
 CONFIG_BT_MRVL=m
 CONFIG_BT_MRVL_SDIO=m
@@ -378,6 +389,7 @@ CONFIG_NSC_GPIO=m
 # CONFIG_RAW_DRIVER is not set
 CONFIG_HANGCHECK_TIMER=m
 CONFIG_TELCLOCK=m
+CONFIG_DEVPORT=y
 
 ##
 ## file: drivers/char/hw_random/Kconfig
@@ -413,6 +425,7 @@ CONFIG_IPWIRELESS=m
 # CONFIG_COMMON_CLK_SI570 is not set
 # CONFIG_COMMON_CLK_CDCE706 is not set
 # CONFIG_COMMON_CLK_CDCE925 is not set
+# CONFIG_COMMON_CLK_CS2000_CP is not set
 
 ##
 ## file: drivers/connector/Kconfig
@@ -425,7 +438,6 @@ CONFIG_PROC_EVENTS=y
 ##
 CONFIG_CPU_FREQ=y
 CONFIG_CPU_FREQ_STAT=y
-# CONFIG_CPU_FREQ_STAT_DETAILS is not set
 ## choice: Default CPUFreq governor
 CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
 # CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE is not set
@@ -438,6 +450,7 @@ CONFIG_CPU_FREQ_GOV_POWERSAVE=m
 CONFIG_CPU_FREQ_GOV_USERSPACE=m
 CONFIG_CPU_FREQ_GOV_ONDEMAND=m
 CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m
+CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y
 # CONFIG_CPUFREQ_DT is not set
 
 ##
@@ -452,6 +465,17 @@ CONFIG_CPU_IDLE_GOV_MENU=y
 CONFIG_CRYPTO_HW=y
 CONFIG_CRYPTO_DEV_HIFN_795X=m
 CONFIG_CRYPTO_DEV_HIFN_795X_RNG=y
+
+##
+## file: drivers/crypto/chelsio/Kconfig
+##
+CONFIG_CRYPTO_DEV_CHELSIO=m
+
+##
+## file: drivers/dax/Kconfig
+##
+CONFIG_DEV_DAX=m
+CONFIG_DEV_DAX_PMEM=m
 
 ##
 ## file: drivers/devfreq/Kconfig
@@ -483,6 +507,11 @@ CONFIG_ASYNC_TX_DMA=y
 # CONFIG_DW_DMAC_PCI is not set
 
 ##
+## file: drivers/dma-buf/Kconfig
+##
+# CONFIG_SYNC_FILE is not set
+
+##
 ## file: drivers/edac/Kconfig
 ##
 CONFIG_EDAC_LEGACY_SYSFS=y
@@ -512,6 +541,7 @@ CONFIG_DMI_SYSFS=y
 CONFIG_EFI_VARS=m
 CONFIG_EFI_VARS_PSTORE=m
 # CONFIG_EFI_VARS_PSTORE_DEFAULT_DISABLE is not set
+# CONFIG_EFI_TEST is not set
 
 ##
 ## file: drivers/fmc/Kconfig
@@ -531,9 +561,11 @@ CONFIG_EFI_VARS_PSTORE=m
 CONFIG_GPIO_SYSFS=y
 # CONFIG_GPIO_74XX_MMIO is not set
 # CONFIG_GPIO_ALTERA is not set
+# CONFIG_GPIO_AMDPT is not set
 # CONFIG_GPIO_DWAPB is not set
 # CONFIG_GPIO_GENERIC_PLATFORM is not set
 # CONFIG_GPIO_GRGPIO is not set
+# CONFIG_GPIO_MOCKUP is not set
 # CONFIG_GPIO_VX855 is not set
 # CONFIG_GPIO_XILINX is not set
 # CONFIG_GPIO_ZX is not set
@@ -548,6 +580,8 @@ CONFIG_GPIO_SYSFS=y
 # CONFIG_GPIO_PCA953X is not set
 # CONFIG_GPIO_PCF857X is not set
 # CONFIG_GPIO_SX150X is not set
+# CONFIG_GPIO_TPIC2810 is not set
+# CONFIG_GPIO_TS4900 is not set
 # CONFIG_GPIO_CS5535 is not set
 # CONFIG_GPIO_AMD8111 is not set
 # CONFIG_GPIO_INTEL_MID is not set
@@ -556,17 +590,31 @@ CONFIG_GPIO_SYSFS=y
 # CONFIG_GPIO_74X164 is not set
 # CONFIG_GPIO_MAX7301 is not set
 # CONFIG_GPIO_MC33880 is not set
+# CONFIG_GPIO_PISOSR is not set
 # CONFIG_GPIO_MCP23S08 is not set
 CONFIG_GPIO_VIPERBOARD=m
 
 ##
 ## file: drivers/gpu/drm/Kconfig
 ##
+# CONFIG_DRM_DP_AUX_CHARDEV is not set
 CONFIG_DRM_FBDEV_EMULATION=y
 CONFIG_DRM_LOAD_EDID_FIRMWARE=y
 CONFIG_DRM_VGEM=m
+CONFIG_DRM_LEGACY=y
 CONFIG_DRM_VIA=m
 CONFIG_DRM_SAVAGE=m
+
+##
+## file: drivers/gpu/drm/amd/acp/Kconfig
+##
+# CONFIG_DRM_AMD_ACP is not set
+
+##
+## file: drivers/gpu/drm/amd/amdgpu/Kconfig
+##
+# CONFIG_DRM_AMDGPU_SI is not set
+# CONFIG_DRM_AMDGPU_GART_DEBUGFS is not set
 
 ##
 ## file: drivers/gpu/drm/ast/Kconfig
@@ -581,6 +629,7 @@ CONFIG_DRM_BOCHS=m
 ##
 ## file: drivers/gpu/drm/bridge/Kconfig
 ##
+# CONFIG_DRM_ANALOGIX_ANX78XX is not set
 # CONFIG_DRM_NXP_PTN3460 is not set
 # CONFIG_DRM_PARADE_PS8622 is not set
 
@@ -600,6 +649,17 @@ CONFIG_DRM_CIRRUS_QEMU=m
 # CONFIG_DRM_I2C_CH7006 is not set
 # CONFIG_DRM_I2C_SIL164 is not set
 # CONFIG_DRM_I2C_NXP_TDA998X is not set
+
+##
+## file: drivers/gpu/drm/i915/Kconfig
+##
+CONFIG_DRM_I915_USERPTR=y
+
+##
+## file: drivers/gpu/drm/i915/Kconfig.debug
+##
+# CONFIG_DRM_I915_WERROR is not set
+# CONFIG_DRM_I915_DEBUG is not set
 
 ##
 ## file: drivers/gpu/drm/mgag200/Kconfig
@@ -746,7 +806,13 @@ CONFIG_HID_ZEROPLUS=m
 CONFIG_ZEROPLUS_FF=y
 CONFIG_HID_ZYDACRON=m
 CONFIG_HID_SENSOR_HUB=m
+CONFIG_HID_SENSOR_CUSTOM_SENSOR=m
 CONFIG_HID_ALPS=m
+
+##
+## file: drivers/hid/intel-ish-hid/Kconfig
+##
+# CONFIG_INTEL_ISH_HID is not set
 
 ##
 ## file: drivers/hid/usbhid/Kconfig
@@ -788,6 +854,7 @@ CONFIG_SENSORS_F71882FG=m
 CONFIG_SENSORS_F75375S=m
 CONFIG_SENSORS_MC13783_ADC=m
 CONFIG_SENSORS_FSCHMD=m
+CONFIG_SENSORS_FTSTEUTATES=m
 CONFIG_SENSORS_G760A=m
 # CONFIG_SENSORS_GPIO_FAN is not set
 # CONFIG_SENSORS_HIH6130 is not set
@@ -859,6 +926,11 @@ CONFIG_SENSORS_ATK0110=m
 # CONFIG_PMBUS is not set
 
 ##
+## file: drivers/hwtracing/intel_th/Kconfig
+##
+# CONFIG_INTEL_TH is not set
+
+##
 ## file: drivers/hwtracing/stm/Kconfig
 ##
 # CONFIG_STM is not set
@@ -918,11 +990,6 @@ CONFIG_IDE_PROC_FS=y
 # CONFIG_BLK_DEV_IT821X is not set
 
 ##
-## file: drivers/idle/Kconfig
-##
-CONFIG_I7300_IDLE=m
-
-##
 ## file: drivers/iio/Kconfig
 ##
 CONFIG_IIO=m
@@ -933,15 +1000,23 @@ CONFIG_IIO_BUFFER=y
 ## file: drivers/iio/accel/Kconfig
 ##
 # CONFIG_BMA180 is not set
+# CONFIG_BMA220 is not set
 # CONFIG_BMC150_ACCEL is not set
+# CONFIG_DMARD09 is not set
 CONFIG_HID_SENSOR_ACCEL_3D=m
 # CONFIG_IIO_ST_ACCEL_3AXIS is not set
 # CONFIG_KXSD9 is not set
 # CONFIG_KXCJK1013 is not set
+# CONFIG_MC3230 is not set
+# CONFIG_MMA7455_I2C is not set
+# CONFIG_MMA7455_SPI is not set
+# CONFIG_MMA7660 is not set
 # CONFIG_MMA8452 is not set
 # CONFIG_MMA9551 is not set
 # CONFIG_MMA9553 is not set
 # CONFIG_MXC4005 is not set
+# CONFIG_MXC6255 is not set
+# CONFIG_SCA3000 is not set
 # CONFIG_STK8312 is not set
 # CONFIG_STK8BA50 is not set
 
@@ -959,13 +1034,19 @@ CONFIG_HID_SENSOR_ACCEL_3D=m
 # CONFIG_AD799X is not set
 # CONFIG_CC10001_ADC is not set
 # CONFIG_HI8435 is not set
+# CONFIG_INA2XX_ADC is not set
+# CONFIG_LTC2485 is not set
 # CONFIG_MAX1027 is not set
 # CONFIG_MAX1363 is not set
 # CONFIG_MCP320X is not set
 # CONFIG_MCP3422 is not set
 # CONFIG_NAU7802 is not set
 # CONFIG_TI_ADC081C is not set
+# CONFIG_TI_ADC0832 is not set
+# CONFIG_TI_ADC12138 is not set
 # CONFIG_TI_ADC128S052 is not set
+# CONFIG_TI_ADC161S626 is not set
+# CONFIG_TI_ADS1015 is not set
 # CONFIG_VF610_ADC is not set
 CONFIG_VIPERBOARD_ADC=m
 
@@ -984,6 +1065,8 @@ CONFIG_VIPERBOARD_ADC=m
 ##
 ## file: drivers/iio/chemical/Kconfig
 ##
+# CONFIG_ATLAS_PH_SENSOR is not set
+# CONFIG_IAQCORE is not set
 # CONFIG_VZ89X is not set
 
 ##
@@ -1000,13 +1083,17 @@ CONFIG_VIPERBOARD_ADC=m
 # CONFIG_AD5421 is not set
 # CONFIG_AD5446 is not set
 # CONFIG_AD5449 is not set
+# CONFIG_AD5592R is not set
+# CONFIG_AD5593R is not set
 # CONFIG_AD5504 is not set
 # CONFIG_AD5624R_SPI is not set
 # CONFIG_AD5686 is not set
 # CONFIG_AD5755 is not set
+# CONFIG_AD5761 is not set
 # CONFIG_AD5764 is not set
 # CONFIG_AD5791 is not set
 # CONFIG_AD7303 is not set
+# CONFIG_AD8801 is not set
 # CONFIG_M62332 is not set
 # CONFIG_MAX517 is not set
 # CONFIG_MAX5821 is not set
@@ -1038,8 +1125,16 @@ CONFIG_HID_SENSOR_GYRO_3D=m
 # CONFIG_ITG3200 is not set
 
 ##
+## file: drivers/iio/health/Kconfig
+##
+# CONFIG_AFE4403 is not set
+# CONFIG_AFE4404 is not set
+# CONFIG_MAX30100 is not set
+
+##
 ## file: drivers/iio/humidity/Kconfig
 ##
+# CONFIG_AM2315 is not set
 # CONFIG_DHT11 is not set
 # CONFIG_HDC100X is not set
 # CONFIG_HTU21 is not set
@@ -1052,6 +1147,12 @@ CONFIG_HID_SENSOR_GYRO_3D=m
 # CONFIG_ADIS16400 is not set
 # CONFIG_ADIS16480 is not set
 # CONFIG_KMX61 is not set
+
+##
+## file: drivers/iio/imu/bmi160/Kconfig
+##
+# CONFIG_BMI160_I2C is not set
+# CONFIG_BMI160_SPI is not set
 
 ##
 ## file: drivers/iio/imu/inv_mpu6050/Kconfig
@@ -1080,15 +1181,19 @@ CONFIG_HID_SENSOR_PROX=m
 # CONFIG_JSA1212 is not set
 # CONFIG_RPR0521 is not set
 # CONFIG_LTR501 is not set
+# CONFIG_MAX44000 is not set
 # CONFIG_OPT3001 is not set
 # CONFIG_PA12203001 is not set
+# CONFIG_SI1145 is not set
 # CONFIG_STK3310 is not set
 # CONFIG_TCS3414 is not set
 # CONFIG_TCS3472 is not set
 # CONFIG_SENSORS_TSL2563 is not set
+# CONFIG_TSL2583 is not set
 # CONFIG_TSL4531 is not set
 # CONFIG_US5182D is not set
 # CONFIG_VCNL4000 is not set
+# CONFIG_VEML6070 is not set
 
 ##
 ## file: drivers/iio/magnetometer/Kconfig
@@ -1113,13 +1218,18 @@ CONFIG_HID_SENSOR_DEVICE_ROTATION=m
 ##
 ## file: drivers/iio/potentiometer/Kconfig
 ##
+# CONFIG_DS1803 is not set
+# CONFIG_MAX5487 is not set
+# CONFIG_MCP4131 is not set
 # CONFIG_MCP4531 is not set
+# CONFIG_TPL0102 is not set
 
 ##
 ## file: drivers/iio/pressure/Kconfig
 ##
 # CONFIG_BMP280 is not set
 CONFIG_HID_SENSOR_PRESS=m
+# CONFIG_HP03 is not set
 # CONFIG_MPL115_I2C is not set
 # CONFIG_MPL115_SPI is not set
 # CONFIG_MPL3115 is not set
@@ -1127,6 +1237,8 @@ CONFIG_HID_SENSOR_PRESS=m
 # CONFIG_MS5637 is not set
 # CONFIG_IIO_ST_PRESS is not set
 # CONFIG_T5403 is not set
+# CONFIG_HP206C is not set
+# CONFIG_ZPA2326 is not set
 
 ##
 ## file: drivers/iio/proximity/Kconfig
@@ -1138,6 +1250,7 @@ CONFIG_HID_SENSOR_PRESS=m
 ##
 ## file: drivers/iio/temperature/Kconfig
 ##
+# CONFIG_MAXIM_THERMOCOUPLE is not set
 # CONFIG_MLX90614 is not set
 # CONFIG_TMP006 is not set
 # CONFIG_TSYS01 is not set
@@ -1169,6 +1282,16 @@ CONFIG_INFINIBAND_CXGB3=m
 CONFIG_INFINIBAND_CXGB4=m
 
 ##
+## file: drivers/infiniband/hw/hfi1/Kconfig
+##
+CONFIG_INFINIBAND_HFI1=m
+
+##
+## file: drivers/infiniband/hw/i40iw/Kconfig
+##
+CONFIG_INFINIBAND_I40IW=m
+
+##
 ## file: drivers/infiniband/hw/mlx4/Kconfig
 ##
 CONFIG_MLX4_INFINIBAND=m
@@ -1196,6 +1319,11 @@ CONFIG_INFINIBAND_NES=m
 CONFIG_INFINIBAND_OCRDMA=m
 
 ##
+## file: drivers/infiniband/hw/qedr/Kconfig
+##
+CONFIG_INFINIBAND_QEDR=m
+
+##
 ## file: drivers/infiniband/hw/qib/Kconfig
 ##
 CONFIG_INFINIBAND_QIB=m
@@ -1205,6 +1333,11 @@ CONFIG_INFINIBAND_QIB_DCA=y
 ## file: drivers/infiniband/sw/rdmavt/Kconfig
 ##
 CONFIG_INFINIBAND_RDMAVT=m
+
+##
+## file: drivers/infiniband/sw/rxe/Kconfig
+##
+CONFIG_RDMA_RXE=m
 
 ##
 ## file: drivers/infiniband/ulp/ipoib/Kconfig
@@ -1293,6 +1426,7 @@ CONFIG_JOYSTICK_IFORCE_232=y
 ## file: drivers/input/keyboard/Kconfig
 ##
 CONFIG_INPUT_KEYBOARD=y
+# CONFIG_KEYBOARD_ADC is not set
 CONFIG_KEYBOARD_ADP5588=m
 # CONFIG_KEYBOARD_ADP5589 is not set
 # CONFIG_KEYBOARD_QT1070 is not set
@@ -1321,10 +1455,10 @@ CONFIG_KEYBOARD_STOWAWAY=m
 # CONFIG_INPUT_BMA150 is not set
 # CONFIG_INPUT_E3X0_BUTTON is not set
 # CONFIG_INPUT_MMA8450 is not set
-# CONFIG_INPUT_MPU3050 is not set
 # CONFIG_INPUT_GP2A is not set
 # CONFIG_INPUT_GPIO_BEEPER is not set
 # CONFIG_INPUT_GPIO_TILT_POLLED is not set
+# CONFIG_INPUT_GPIO_DECODER is not set
 CONFIG_INPUT_ATI_REMOTE2=m
 CONFIG_INPUT_KEYSPAN_REMOTE=m
 # CONFIG_INPUT_KXTJ9 is not set
@@ -1347,6 +1481,7 @@ CONFIG_INPUT_XEN_KBDDEV_FRONTEND=y
 ## file: drivers/input/mouse/Kconfig
 ##
 CONFIG_MOUSE_PS2_ALPS=y
+CONFIG_MOUSE_PS2_BYD=y
 CONFIG_MOUSE_PS2_LOGIPS2PP=y
 CONFIG_MOUSE_PS2_SYNAPTICS=y
 CONFIG_MOUSE_PS2_CYPRESS=y
@@ -1385,6 +1520,7 @@ CONFIG_TABLET_USB_AIPTEK=m
 CONFIG_TABLET_USB_GTCO=m
 CONFIG_TABLET_USB_HANWANG=m
 CONFIG_TABLET_USB_KBTAB=m
+CONFIG_TABLET_USB_PEGASUS=m
 CONFIG_TABLET_SERIAL_WACOM4=m
 
 ##
@@ -1408,10 +1544,12 @@ CONFIG_TOUCHSCREEN_DYNAPRO=m
 CONFIG_TOUCHSCREEN_HAMPSHIRE=m
 CONFIG_TOUCHSCREEN_EETI=m
 # CONFIG_TOUCHSCREEN_EGALAX is not set
+# CONFIG_TOUCHSCREEN_EGALAX_SERIAL is not set
 CONFIG_TOUCHSCREEN_FUJITSU=m
-# CONFIG_TOUCHSCREEN_GOODIX is not set
+CONFIG_TOUCHSCREEN_GOODIX=m
 # CONFIG_TOUCHSCREEN_ILI210X is not set
 CONFIG_TOUCHSCREEN_GUNZE=m
+# CONFIG_TOUCHSCREEN_EKTF2127 is not set
 # CONFIG_TOUCHSCREEN_ELAN is not set
 CONFIG_TOUCHSCREEN_ELO=m
 CONFIG_TOUCHSCREEN_WACOM_W8001=m
@@ -1419,6 +1557,7 @@ CONFIG_TOUCHSCREEN_WACOM_W8001=m
 # CONFIG_TOUCHSCREEN_MAX11801 is not set
 CONFIG_TOUCHSCREEN_MCS5000=m
 # CONFIG_TOUCHSCREEN_MMS114 is not set
+# CONFIG_TOUCHSCREEN_MELFAS_MIP4 is not set
 CONFIG_TOUCHSCREEN_MTOUCH=m
 # CONFIG_TOUCHSCREEN_IMX6UL_TSC is not set
 CONFIG_TOUCHSCREEN_INEXIO=m
@@ -1458,6 +1597,9 @@ CONFIG_TOUCHSCREEN_TOUCHIT213=m
 # CONFIG_TOUCHSCREEN_TSC2004 is not set
 # CONFIG_TOUCHSCREEN_TSC2005 is not set
 CONFIG_TOUCHSCREEN_TSC2007=m
+# CONFIG_TOUCHSCREEN_RM_TS is not set
+# CONFIG_TOUCHSCREEN_SILEAD is not set
+# CONFIG_TOUCHSCREEN_SIS_I2C is not set
 # CONFIG_TOUCHSCREEN_ST1232 is not set
 CONFIG_TOUCHSCREEN_SUR40=m
 # CONFIG_TOUCHSCREEN_SX8654 is not set
@@ -1534,8 +1676,9 @@ CONFIG_LEDS_CLASS=y
 # CONFIG_LEDS_LM3642 is not set
 CONFIG_LEDS_NET48XX=m
 # CONFIG_LEDS_PCA9532 is not set
-# CONFIG_LEDS_GPIO is not set
+CONFIG_LEDS_GPIO=m
 CONFIG_LEDS_LP3944=m
+# CONFIG_LEDS_LP3952 is not set
 # CONFIG_LEDS_LP5521 is not set
 # CONFIG_LEDS_LP5523 is not set
 # CONFIG_LEDS_LP5562 is not set
@@ -1557,6 +1700,7 @@ CONFIG_LEDS_MC13783=m
 # CONFIG_LEDS_LM355x is not set
 # CONFIG_LEDS_OT200 is not set
 # CONFIG_LEDS_BLINKM is not set
+# CONFIG_LEDS_MLXCPLD is not set
 
 ##
 ## file: drivers/leds/trigger/Kconfig
@@ -1564,6 +1708,8 @@ CONFIG_LEDS_MC13783=m
 CONFIG_LEDS_TRIGGERS=y
 CONFIG_LEDS_TRIGGER_TIMER=m
 CONFIG_LEDS_TRIGGER_ONESHOT=m
+CONFIG_LEDS_TRIGGER_DISK=y
+CONFIG_LEDS_TRIGGER_MTD=y
 CONFIG_LEDS_TRIGGER_HEARTBEAT=m
 CONFIG_LEDS_TRIGGER_BACKLIGHT=m
 CONFIG_LEDS_TRIGGER_CPU=y
@@ -1571,6 +1717,7 @@ CONFIG_LEDS_TRIGGER_GPIO=m
 CONFIG_LEDS_TRIGGER_DEFAULT_ON=m
 CONFIG_LEDS_TRIGGER_TRANSIENT=m
 CONFIG_LEDS_TRIGGER_CAMERA=m
+CONFIG_LEDS_TRIGGER_PANIC=y
 
 ##
 ## file: drivers/mailbox/Kconfig
@@ -1594,6 +1741,7 @@ CONFIG_MD_RAID10=m
 CONFIG_MD_RAID456=m
 CONFIG_MD_MULTIPATH=m
 CONFIG_MD_FAULTY=m
+# CONFIG_MD_CLUSTER is not set
 CONFIG_BLK_DEV_DM=m
 # CONFIG_DM_DEBUG is not set
 # CONFIG_DM_DEBUG_BLOCK_STACK_TRACING is not set
@@ -1904,9 +2052,19 @@ CONFIG_DVB_BUDGET_AV=m
 CONFIG_DVB_BUDGET_PATCH=m
 
 ##
+## file: drivers/media/pci/tw5864/Kconfig
+##
+CONFIG_VIDEO_TW5864=m
+
+##
 ## file: drivers/media/pci/tw68/Kconfig
 ##
 CONFIG_VIDEO_TW68=m
+
+##
+## file: drivers/media/pci/tw686x/Kconfig
+##
+CONFIG_VIDEO_TW686X=m
 
 ##
 ## file: drivers/media/pci/zoran/Kconfig
@@ -2247,7 +2405,6 @@ CONFIG_SMS_USB_DRV=m
 ## file: drivers/media/usb/stk1160/Kconfig
 ##
 CONFIG_VIDEO_STK1160_COMMON=m
-CONFIG_VIDEO_STK1160_AC97=y
 
 ##
 ## file: drivers/media/usb/stkwebcam/Kconfig
@@ -2290,6 +2447,7 @@ CONFIG_USB_ZR364XX=m
 ##
 # CONFIG_VIDEO_ADV_DEBUG is not set
 # CONFIG_VIDEO_FIXED_MINOR_RANGES is not set
+# CONFIG_VIDEO_PCI_SKELETON is not set
 
 ##
 ## file: drivers/memory/Kconfig
@@ -2341,6 +2499,7 @@ CONFIG_FUSION_LAN=m
 # CONFIG_MFD_ATMEL_FLEXCOM is not set
 # CONFIG_MFD_ATMEL_HLCDC is not set
 # CONFIG_MFD_BCM590XX is not set
+# CONFIG_MFD_AXP20X_I2C is not set
 # CONFIG_MFD_CROS_EC is not set
 # CONFIG_PMIC_DA903X is not set
 # CONFIG_MFD_DA9052_SPI is not set
@@ -2350,6 +2509,7 @@ CONFIG_FUSION_LAN=m
 # CONFIG_MFD_DA9063 is not set
 # CONFIG_MFD_DA9150 is not set
 # CONFIG_MFD_DLN2 is not set
+# CONFIG_MFD_EXYNOS_LPASS is not set
 # CONFIG_MFD_MC13XXX_SPI is not set
 # CONFIG_MFD_MC13XXX_I2C is not set
 # CONFIG_MFD_HI6421_PMIC is not set
@@ -2405,8 +2565,10 @@ CONFIG_AB3100_OTP=m
 # CONFIG_TPS6105X is not set
 # CONFIG_TPS65010 is not set
 # CONFIG_TPS6507X is not set
+# CONFIG_MFD_TPS65086 is not set
 # CONFIG_MFD_TPS65090 is not set
 # CONFIG_MFD_TPS65217 is not set
+# CONFIG_MFD_TI_LP873X is not set
 # CONFIG_MFD_TPS65218 is not set
 # CONFIG_MFD_TPS6586X is not set
 # CONFIG_MFD_TPS65910 is not set
@@ -2508,7 +2670,7 @@ CONFIG_SENSORS_LIS3_I2C=m
 # CONFIG_TI_ST is not set
 
 ##
-## file: drivers/mmc/card/Kconfig
+## file: drivers/mmc/core/Kconfig
 ##
 CONFIG_MMC_BLOCK_MINORS=256
 CONFIG_MMC_BLOCK_BOUNCE=y
@@ -2595,6 +2757,7 @@ CONFIG_MTD_NAND_CS553X=m
 CONFIG_MTD_NAND_NANDSIM=m
 # CONFIG_MTD_NAND_PLATFORM is not set
 # CONFIG_MTD_NAND_HISI504 is not set
+# CONFIG_MTD_NAND_MTK is not set
 
 ##
 ## file: drivers/mtd/onenand/Kconfig
@@ -2609,6 +2772,7 @@ CONFIG_MTD_ONENAND_2X_PROGRAM=y
 ## file: drivers/mtd/spi-nor/Kconfig
 ##
 CONFIG_MTD_SPI_NOR=m
+# CONFIG_MTD_MT81xx_NOR is not set
 CONFIG_MTD_SPI_NOR_USE_4K_SECTORS=y
 
 ##
@@ -2635,6 +2799,8 @@ CONFIG_MACVTAP=m
 CONFIG_IPVLAN=m
 CONFIG_VXLAN=m
 CONFIG_GENEVE=m
+CONFIG_GTP=m
+CONFIG_MACSEC=m
 CONFIG_NETCONSOLE=m
 CONFIG_NETCONSOLE_DYNAMIC=y
 CONFIG_TUN=m
@@ -2677,6 +2843,11 @@ CONFIG_CAN_CALC_BITTIMING=y
 ## file: drivers/net/can/cc770/Kconfig
 ##
 # CONFIG_CAN_CC770 is not set
+
+##
+## file: drivers/net/can/ifi_canfd/Kconfig
+##
+# CONFIG_CAN_IFI_CANFD is not set
 
 ##
 ## file: drivers/net/can/m_can/Kconfig
@@ -2745,6 +2916,11 @@ CONFIG_NET_VENDOR_AGERE=y
 CONFIG_ET131X=m
 
 ##
+## file: drivers/net/ethernet/alacritech/Kconfig
+##
+# CONFIG_SLICOSS is not set
+
+##
 ## file: drivers/net/ethernet/alteon/Kconfig
 ##
 CONFIG_NET_VENDOR_ALTEON=y
@@ -2782,6 +2958,11 @@ CONFIG_ATL1=m
 CONFIG_ATL1E=m
 CONFIG_ATL1C=m
 CONFIG_ALX=m
+
+##
+## file: drivers/net/ethernet/aurora/Kconfig
+##
+# CONFIG_NET_VENDOR_AURORA is not set
 
 ##
 ## file: drivers/net/ethernet/broadcom/Kconfig
@@ -2825,6 +3006,7 @@ CONFIG_NET_VENDOR_CAVIUM=y
 # CONFIG_THUNDER_NIC_PF is not set
 # CONFIG_THUNDER_NIC_VF is not set
 # CONFIG_THUNDER_NIC_BGX is not set
+# CONFIG_THUNDER_NIC_RGX is not set
 CONFIG_LIQUIDIO=m
 
 ##
@@ -2836,6 +3018,7 @@ CONFIG_CHELSIO_T1_1G=y
 CONFIG_CHELSIO_T3=m
 CONFIG_CHELSIO_T4=m
 CONFIG_CHELSIO_T4_DCB=y
+CONFIG_CHELSIO_T4_FCOE=y
 CONFIG_CHELSIO_T4VF=m
 
 ##
@@ -2901,6 +3084,7 @@ CONFIG_NET_VENDOR_I825XX=y
 CONFIG_NET_VENDOR_INTEL=y
 CONFIG_E1000=m
 CONFIG_E1000E=m
+CONFIG_E1000E_HWTS=y
 CONFIG_IGB=m
 CONFIG_IGB_HWMON=y
 CONFIG_IGB_DCA=y
@@ -2915,6 +3099,7 @@ CONFIG_I40E=m
 CONFIG_I40E_DCB=y
 CONFIG_I40E_FCOE=y
 CONFIG_I40EVF=m
+# CONFIG_FM10K is not set
 
 ##
 ## file: drivers/net/ethernet/marvell/Kconfig
@@ -2944,6 +3129,7 @@ CONFIG_MLX4_DEBUG=y
 ##
 CONFIG_MLX5_CORE=m
 CONFIG_MLX5_CORE_EN=y
+CONFIG_MLX5_CORE_EN_DCB=y
 
 ##
 ## file: drivers/net/ethernet/mellanox/mlxsw/Kconfig
@@ -2989,6 +3175,12 @@ CONFIG_VXGE=m
 # CONFIG_VXGE_DEBUG_TRACE_ALL is not set
 
 ##
+## file: drivers/net/ethernet/netronome/Kconfig
+##
+CONFIG_NET_VENDOR_NETRONOME=y
+CONFIG_NFP=m
+
+##
 ## file: drivers/net/ethernet/oki-semi/Kconfig
 ##
 CONFIG_NET_VENDOR_OKI=y
@@ -3012,6 +3204,7 @@ CONFIG_QLCNIC_HWMON=y
 CONFIG_QLGE=m
 CONFIG_NETXEN_NIC=m
 CONFIG_QED=m
+CONFIG_QED_SRIOV=y
 CONFIG_QEDE=m
 
 ##
@@ -3019,6 +3212,7 @@ CONFIG_QEDE=m
 ##
 CONFIG_NET_VENDOR_QUALCOMM=y
 # CONFIG_QCA7000 is not set
+# CONFIG_QCOM_EMAC is not set
 
 ##
 ## file: drivers/net/ethernet/rdc/Kconfig
@@ -3069,6 +3263,12 @@ CONFIG_SFC_SRIOV=y
 CONFIG_SFC_MCDI_LOGGING=y
 
 ##
+## file: drivers/net/ethernet/sfc/falcon/Kconfig
+##
+CONFIG_SFC_FALCON=m
+CONFIG_SFC_FALCON_MTD=y
+
+##
 ## file: drivers/net/ethernet/silan/Kconfig
 ##
 CONFIG_NET_VENDOR_SILAN=y
@@ -3103,12 +3303,6 @@ CONFIG_NET_VENDOR_STMICRO=y
 CONFIG_NET_VENDOR_SUN=y
 CONFIG_CASSINI=m
 CONFIG_NIU=m
-
-##
-## file: drivers/net/ethernet/synopsys/Kconfig
-##
-CONFIG_NET_VENDOR_SYNOPSYS=y
-# CONFIG_SYNOPSYS_DWC_ETH_QOS is not set
 
 ##
 ## file: drivers/net/ethernet/tehuti/Kconfig
@@ -3158,6 +3352,7 @@ CONFIG_YAM=m
 ## file: drivers/net/ieee802154/Kconfig
 ##
 CONFIG_IEEE802154_DRIVERS=m
+CONFIG_IEEE802154_FAKELB=m
 CONFIG_IEEE802154_AT86RF230=m
 CONFIG_IEEE802154_MRF24J40=m
 CONFIG_IEEE802154_CC2520=m
@@ -3193,6 +3388,7 @@ CONFIG_PHYLIB=y
 # CONFIG_MDIO_BUS_MUX_MMIOREG is not set
 # CONFIG_MDIO_GPIO is not set
 # CONFIG_MDIO_OCTEON is not set
+# CONFIG_MDIO_THUNDER is not set
 CONFIG_AMD_PHY=m
 CONFIG_AQUANTIA_PHY=m
 CONFIG_AT803X_PHY=m
@@ -3207,11 +3403,13 @@ CONFIG_DP83867_PHY=m
 #. Must only be enabled for specific flavours
 # CONFIG_FIXED_PHY is not set
 CONFIG_ICPLUS_PHY=m
+# CONFIG_INTEL_XWAY_PHY is not set
 CONFIG_LSI_ET1011C_PHY=m
 CONFIG_LXT_PHY=m
 CONFIG_MARVELL_PHY=m
 CONFIG_MICREL_PHY=m
 CONFIG_MICROCHIP_PHY=m
+CONFIG_MICROSEMI_PHY=m
 CONFIG_NATIONAL_PHY=m
 CONFIG_QSEMI_PHY=m
 CONFIG_REALTEK_PHY=m
@@ -3219,6 +3417,7 @@ CONFIG_SMSC_PHY=m
 CONFIG_STE10XP=m
 CONFIG_TERANETICS_PHY=m
 CONFIG_VITESSE_PHY=m
+# CONFIG_XILINX_GMII2RGMII is not set
 # CONFIG_MICREL_KS8995MA is not set
 
 ##
@@ -3329,6 +3528,7 @@ CONFIG_USB_NET_RNDIS_WLAN=m
 ##
 ## file: drivers/net/wireless/admtek/Kconfig
 ##
+CONFIG_WLAN_VENDOR_ADMTEK=y
 CONFIG_ADM8211=m
 
 ##
@@ -3381,6 +3581,7 @@ CONFIG_ATH9K_RFKILL=y
 CONFIG_ATH9K_PCOEM=y
 CONFIG_ATH9K_HTC=m
 # CONFIG_ATH9K_HTC_DEBUGFS is not set
+# CONFIG_ATH9K_HWRNG is not set
 
 ##
 ## file: drivers/net/wireless/ath/carl9170/Kconfig
@@ -3405,7 +3606,13 @@ CONFIG_WIL6210_TRACING=y
 ##
 ## file: drivers/net/wireless/atmel/Kconfig
 ##
+CONFIG_WLAN_VENDOR_ATMEL=y
 CONFIG_AT76C50X_USB=m
+
+##
+## file: drivers/net/wireless/broadcom/Kconfig
+##
+CONFIG_WLAN_VENDOR_BROADCOM=y
 
 ##
 ## file: drivers/net/wireless/broadcom/b43/Kconfig
@@ -3443,7 +3650,13 @@ CONFIG_BRCMFMAC_PCIE=y
 ##
 ## file: drivers/net/wireless/cisco/Kconfig
 ##
+CONFIG_WLAN_VENDOR_CISCO=y
 CONFIG_AIRO=m
+
+##
+## file: drivers/net/wireless/intel/Kconfig
+##
+CONFIG_WLAN_VENDOR_INTEL=y
 
 ##
 ## file: drivers/net/wireless/intel/ipw2x00/Kconfig
@@ -3476,6 +3689,7 @@ CONFIG_IWLMVM=m
 ##
 ## file: drivers/net/wireless/intersil/Kconfig
 ##
+CONFIG_WLAN_VENDOR_INTERSIL=y
 # CONFIG_PRISM54 is not set
 
 ##
@@ -3509,6 +3723,7 @@ CONFIG_P54_PCI=m
 ##
 ## file: drivers/net/wireless/marvell/Kconfig
 ##
+CONFIG_WLAN_VENDOR_MARVELL=y
 CONFIG_MWL8K=m
 
 ##
@@ -3540,6 +3755,11 @@ CONFIG_WLAN_VENDOR_MEDIATEK=y
 CONFIG_MT7601U=m
 
 ##
+## file: drivers/net/wireless/ralink/Kconfig
+##
+CONFIG_WLAN_VENDOR_RALINK=y
+
+##
 ## file: drivers/net/wireless/ralink/rt2x00/Kconfig
 ##
 CONFIG_RT2X00=m
@@ -3561,6 +3781,11 @@ CONFIG_RT2800USB_RT53XX=y
 CONFIG_RT2800USB_RT55XX=y
 # CONFIG_RT2800USB_UNKNOWN is not set
 # CONFIG_RT2X00_DEBUG is not set
+
+##
+## file: drivers/net/wireless/realtek/Kconfig
+##
+CONFIG_WLAN_VENDOR_REALTEK=y
 
 ##
 ## file: drivers/net/wireless/realtek/rtl818x/Kconfig
@@ -3592,10 +3817,16 @@ CONFIG_RTL8192CU=m
 ##
 ## file: drivers/net/wireless/rsi/Kconfig
 ##
+CONFIG_WLAN_VENDOR_RSI=y
 CONFIG_RSI_91X=m
 CONFIG_RSI_DEBUGFS=y
 # CONFIG_RSI_SDIO is not set
 CONFIG_RSI_USB=m
+
+##
+## file: drivers/net/wireless/st/Kconfig
+##
+CONFIG_WLAN_VENDOR_ST=y
 
 ##
 ## file: drivers/net/wireless/st/cw1200/Kconfig
@@ -3606,6 +3837,11 @@ CONFIG_RSI_USB=m
 ## file: drivers/net/wireless/ti/Kconfig
 ##
 # CONFIG_WLAN_VENDOR_TI is not set
+
+##
+## file: drivers/net/wireless/zydas/Kconfig
+##
+CONFIG_WLAN_VENDOR_ZYDAS=y
 
 ##
 ## file: drivers/net/wireless/zydas/zd1211rw/Kconfig
@@ -3630,6 +3866,7 @@ CONFIG_NFC_PORT100=m
 ## file: drivers/nfc/pn533/Kconfig
 ##
 CONFIG_NFC_PN533_USB=m
+# CONFIG_NFC_PN533_I2C is not set
 
 ##
 ## file: drivers/nfc/st21nfca/Kconfig
@@ -3637,14 +3874,33 @@ CONFIG_NFC_PN533_USB=m
 # CONFIG_NFC_ST21NFCA_I2C is not set
 
 ##
+## file: drivers/nfc/st95hf/Kconfig
+##
+# CONFIG_NFC_ST95HF is not set
+
+##
 ## file: drivers/ntb/Kconfig
 ##
 # CONFIG_NTB is not set
 
 ##
+## file: drivers/nvdimm/Kconfig
+##
+CONFIG_NVDIMM_DAX=y
+
+##
 ## file: drivers/nvme/host/Kconfig
 ##
 CONFIG_BLK_DEV_NVME=m
+# CONFIG_BLK_DEV_NVME_SCSI is not set
+CONFIG_NVME_RDMA=m
+
+##
+## file: drivers/nvme/target/Kconfig
+##
+CONFIG_NVME_TARGET=m
+# CONFIG_NVME_TARGET_LOOP is not set
+CONFIG_NVME_TARGET_RDMA=m
 
 ##
 ## file: drivers/of/Kconfig
@@ -3678,6 +3934,11 @@ CONFIG_PCI_IOV=y
 # CONFIG_PCI_PASID is not set
 
 ##
+## file: drivers/pci/dwc/Kconfig
+##
+# CONFIG_PCIE_DW_PLAT is not set
+
+##
 ## file: drivers/pci/hotplug/Kconfig
 ##
 CONFIG_HOTPLUG_PCI_CPCI=y
@@ -3689,6 +3950,8 @@ CONFIG_PCIEPORTBUS=y
 CONFIG_HOTPLUG_PCI_PCIE=y
 CONFIG_PCIEASPM=y
 # CONFIG_PCIEASPM_DEBUG is not set
+CONFIG_PCIE_DPC=y
+CONFIG_PCIE_PTM=y
 
 ##
 ## file: drivers/pci/pcie/aer/Kconfig
@@ -3741,6 +4004,11 @@ CONFIG_YENTA_TOSHIBA=y
 # CONFIG_PINCTRL_CHERRYVIEW is not set
 # CONFIG_PINCTRL_BROXTON is not set
 # CONFIG_PINCTRL_SUNRISEPOINT is not set
+
+##
+## file: drivers/platform/goldfish/Kconfig
+##
+# CONFIG_GOLDFISH is not set
 
 ##
 ## file: drivers/platform/x86/Kconfig
@@ -3834,11 +4102,6 @@ CONFIG_PTP_1588_CLOCK_IXP46X=m
 # CONFIG_REGULATOR is not set
 
 ##
-## file: drivers/remoteproc/Kconfig
-##
-# CONFIG_STE_MODEM_RPROC is not set
-
-##
 ## file: drivers/reset/Kconfig
 ##
 # CONFIG_RESET_CONTROLLER is not set
@@ -3877,18 +4140,22 @@ CONFIG_RTC_INTF_DEV=y
 # CONFIG_RTC_DRV_BQ32K is not set
 # CONFIG_RTC_DRV_S35390A is not set
 # CONFIG_RTC_DRV_FM3130 is not set
+# CONFIG_RTC_DRV_RX8010 is not set
 # CONFIG_RTC_DRV_RX8581 is not set
 # CONFIG_RTC_DRV_RX8025 is not set
 # CONFIG_RTC_DRV_EM3027 is not set
 # CONFIG_RTC_DRV_RV8803 is not set
 # CONFIG_RTC_DRV_M41T93 is not set
 # CONFIG_RTC_DRV_M41T94 is not set
+# CONFIG_RTC_DRV_DS1302 is not set
 # CONFIG_RTC_DRV_DS1305 is not set
 # CONFIG_RTC_DRV_DS1343 is not set
 # CONFIG_RTC_DRV_DS1347 is not set
 # CONFIG_RTC_DRV_DS1390 is not set
+# CONFIG_RTC_DRV_MAX6916 is not set
 # CONFIG_RTC_DRV_R9701 is not set
 # CONFIG_RTC_DRV_RX4581 is not set
+# CONFIG_RTC_DRV_RX6110 is not set
 # CONFIG_RTC_DRV_RS5C348 is not set
 # CONFIG_RTC_DRV_MAX6902 is not set
 # CONFIG_RTC_DRV_PCF2123 is not set
@@ -4094,6 +4361,7 @@ CONFIG_SCSI_LOWLEVEL_PCMCIA=y
 ##
 CONFIG_SCSI_QLA_FC=m
 CONFIG_TCM_QLA2XXX=m
+# CONFIG_TCM_QLA2XXX_DEBUG is not set
 
 ##
 ## file: drivers/scsi/qla4xxx/Kconfig
@@ -4101,10 +4369,16 @@ CONFIG_TCM_QLA2XXX=m
 CONFIG_SCSI_QLA_ISCSI=m
 
 ##
+## file: drivers/scsi/smartpqi/Kconfig
+##
+CONFIG_SCSI_SMARTPQI=m
+
+##
 ## file: drivers/scsi/ufs/Kconfig
 ##
 CONFIG_SCSI_UFSHCD=m
 CONFIG_SCSI_UFSHCD_PCI=m
+# CONFIG_SCSI_UFS_DWC_TC_PCI is not set
 # CONFIG_SCSI_UFSHCD_PLATFORM is not set
 
 ##
@@ -4118,6 +4392,7 @@ CONFIG_SCSI_UFSHCD_PCI=m
 CONFIG_SPI=y
 # CONFIG_SPI_DEBUG is not set
 # CONFIG_SPI_ALTERA is not set
+# CONFIG_SPI_AXI_SPI_ENGINE is not set
 CONFIG_SPI_BITBANG=m
 CONFIG_SPI_BUTTERFLY=m
 # CONFIG_SPI_CADENCE is not set
@@ -4128,12 +4403,14 @@ CONFIG_SPI_LM70_LLP=m
 # CONFIG_SPI_FSL_DSPI is not set
 # CONFIG_SPI_OC_TINY is not set
 # CONFIG_SPI_PXA2XX is not set
+# CONFIG_SPI_ROCKCHIP is not set
 # CONFIG_SPI_SC18IS602 is not set
 # CONFIG_SPI_TOPCLIFF_PCH is not set
 # CONFIG_SPI_XCOMM is not set
 # CONFIG_SPI_XILINX is not set
 # CONFIG_SPI_ZYNQMP_GQSPI is not set
 # CONFIG_SPI_SPIDEV is not set
+# CONFIG_SPI_LOOPBACK_TEST is not set
 # CONFIG_SPI_TLE62X0 is not set
 
 ##
@@ -4187,6 +4464,11 @@ CONFIG_STAGING=y
 # CONFIG_LTE_GDM724X is not set
 
 ##
+## file: drivers/staging/greybus/Kconfig
+##
+# CONFIG_GREYBUS is not set
+
+##
 ## file: drivers/staging/gs_fpgaboot/Kconfig
 ##
 # CONFIG_GS_FPGABOOT is not set
@@ -4198,7 +4480,6 @@ CONFIG_STAGING=y
 # CONFIG_ADIS16203 is not set
 # CONFIG_ADIS16209 is not set
 # CONFIG_ADIS16240 is not set
-# CONFIG_SCA3000 is not set
 
 ##
 ## file: drivers/staging/iio/adc/Kconfig
@@ -4241,7 +4522,6 @@ CONFIG_STAGING=y
 ## file: drivers/staging/iio/light/Kconfig
 ##
 # CONFIG_SENSORS_ISL29028 is not set
-# CONFIG_TSL2583 is not set
 # CONFIG_TSL2x7x is not set
 
 ##
@@ -4274,7 +4554,6 @@ CONFIG_STAGING=y
 ## file: drivers/staging/media/lirc/Kconfig
 ##
 # CONFIG_LIRC_STAGING is not set
-# CONFIG_LIRC_PARALLEL is not set
 
 ##
 ## file: drivers/staging/most/Kconfig
@@ -4321,11 +4600,6 @@ CONFIG_R8712U=m
 ## file: drivers/staging/skein/Kconfig
 ##
 # CONFIG_CRYPTO_SKEIN is not set
-
-##
-## file: drivers/staging/slicoss/Kconfig
-##
-# CONFIG_SLICOSS is not set
 
 ##
 ## file: drivers/staging/sm750fb/Kconfig
@@ -4386,6 +4660,11 @@ CONFIG_TCM_USER2=m
 CONFIG_ISCSI_TARGET=m
 
 ##
+## file: drivers/target/iscsi/cxgbit/Kconfig
+##
+CONFIG_ISCSI_TARGET_CXGB4=m
+
+##
 ## file: drivers/target/loopback/Kconfig
 ##
 CONFIG_LOOPBACK_TARGET=m
@@ -4415,6 +4694,7 @@ CONFIG_THERMAL_GOV_FAIR_SHARE=y
 # CONFIG_THERMAL_GOV_USER_SPACE is not set
 # CONFIG_THERMAL_GOV_POWER_ALLOCATOR is not set
 # CONFIG_THERMAL_EMULATION is not set
+# CONFIG_GENERIC_ADC_THERMAL is not set
 
 ##
 ## file: drivers/tty/Kconfig
@@ -4472,6 +4752,7 @@ CONFIG_SERIAL_8250_HUB6=m
 # CONFIG_SERIAL_8250_DW is not set
 # CONFIG_SERIAL_8250_RT288X is not set
 # CONFIG_SERIAL_8250_MID is not set
+CONFIG_SERIAL_8250_MOXA=m
 CONFIG_SERIAL_OF_PLATFORM=m
 
 ##
@@ -4525,6 +4806,7 @@ CONFIG_USB_DYNAMIC_MINORS=y
 # CONFIG_USB_OTG_WHITELIST is not set
 # CONFIG_USB_OTG_BLACKLIST_HUB is not set
 # CONFIG_USB_OTG_FSM is not set
+CONFIG_USB_LEDS_TRIGGER_USBPORT=m
 
 ##
 ## file: drivers/usb/dwc2/Kconfig
@@ -4544,6 +4826,37 @@ CONFIG_USB_DYNAMIC_MINORS=y
 # CONFIG_USB_GADGET_DEBUG_FILES is not set
 # CONFIG_USB_GADGET_DEBUG_FS is not set
 CONFIG_USB_GADGET_STORAGE_NUM_BUFFERS=2
+CONFIG_USB_CONFIGFS=m
+CONFIG_USB_CONFIGFS_SERIAL=y
+CONFIG_USB_CONFIGFS_ACM=y
+CONFIG_USB_CONFIGFS_OBEX=y
+CONFIG_USB_CONFIGFS_NCM=y
+CONFIG_USB_CONFIGFS_ECM=y
+CONFIG_USB_CONFIGFS_ECM_SUBSET=y
+CONFIG_USB_CONFIGFS_RNDIS=y
+CONFIG_USB_CONFIGFS_EEM=y
+CONFIG_USB_CONFIGFS_PHONET=y
+CONFIG_USB_CONFIGFS_MASS_STORAGE=y
+CONFIG_USB_CONFIGFS_F_LB_SS=y
+CONFIG_USB_CONFIGFS_F_FS=y
+CONFIG_USB_CONFIGFS_F_UAC1=y
+CONFIG_USB_CONFIGFS_F_UAC2=y
+CONFIG_USB_CONFIGFS_F_MIDI=y
+CONFIG_USB_CONFIGFS_F_HID=y
+CONFIG_USB_CONFIGFS_F_UVC=y
+CONFIG_USB_CONFIGFS_F_PRINTER=y
+
+##
+## file: drivers/usb/gadget/legacy/Kconfig
+##
+CONFIG_USB_ETH=m
+CONFIG_USB_ETH_RNDIS=y
+CONFIG_USB_GADGETFS=m
+CONFIG_USB_FUNCTIONFS=m
+CONFIG_USB_FUNCTIONFS_ETH=y
+CONFIG_USB_FUNCTIONFS_RNDIS=y
+CONFIG_USB_FUNCTIONFS_GENERIC=y
+CONFIG_USB_G_SERIAL=m
 
 ##
 ## file: drivers/usb/gadget/udc/Kconfig
@@ -4626,8 +4939,10 @@ CONFIG_USB_EHSET_TEST_FIXTURE=m
 CONFIG_USB_ISIGHTFW=m
 CONFIG_USB_YUREX=m
 # CONFIG_USB_HSIC_USB3503 is not set
+# CONFIG_USB_HSIC_USB4604 is not set
 # CONFIG_USB_LINK_LAYER_TEST is not set
 CONFIG_USB_CHAOSKEY=m
+CONFIG_UCSI=m
 
 ##
 ## file: drivers/usb/misc/sisusbvga/Kconfig
@@ -4748,6 +5063,7 @@ CONFIG_USB_UAS=m
 ## file: drivers/usb/usbip/Kconfig
 ##
 # CONFIG_USBIP_CORE is not set
+CONFIG_USBIP_VUDC=m
 
 ##
 ## file: drivers/usb/wusbcore/Kconfig
@@ -4763,10 +5079,16 @@ CONFIG_UWB=m
 CONFIG_UWB_I1480U=m
 
 ##
+## file: drivers/vfio/Kconfig
+##
+# CONFIG_VFIO_NOIOMMU is not set
+
+##
 ## file: drivers/vhost/Kconfig
 ##
 CONFIG_VHOST_NET=m
 CONFIG_VHOST_SCSI=m
+CONFIG_VHOST_VSOCK=m
 # CONFIG_VHOST_CROSS_ENDIAN_LEGACY is not set
 
 ##
@@ -4800,6 +5122,7 @@ CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y
 ##
 ## file: drivers/video/fbdev/Kconfig
 ##
+CONFIG_FB=y
 CONFIG_FIRMWARE_EDID=y
 # CONFIG_FB_FOREIGN_ENDIAN is not set
 CONFIG_FB_ARC=m
@@ -4876,7 +5199,7 @@ CONFIG_W1_CON=y
 CONFIG_W1_MASTER_DS2490=m
 CONFIG_W1_MASTER_DS2482=m
 # CONFIG_W1_MASTER_DS1WM is not set
-# CONFIG_W1_MASTER_GPIO is not set
+CONFIG_W1_MASTER_GPIO=m
 
 ##
 ## file: drivers/w1/slaves/Kconfig
@@ -4901,11 +5224,13 @@ CONFIG_W1_SLAVE_BQ27000=m
 ##
 CONFIG_WATCHDOG=y
 # CONFIG_WATCHDOG_NOWAYOUT is not set
+CONFIG_WATCHDOG_SYSFS=y
 CONFIG_SOFT_WATCHDOG=m
 # CONFIG_GPIO_WATCHDOG is not set
 CONFIG_WM831X_WATCHDOG=m
 CONFIG_WM8350_WATCHDOG=m
 # CONFIG_XILINX_WATCHDOG is not set
+# CONFIG_ZIIRAVE_WATCHDOG is not set
 # CONFIG_CADENCE_WATCHDOG is not set
 # CONFIG_DW_WATCHDOG is not set
 # CONFIG_MAX63XX_WATCHDOG is not set
@@ -4943,6 +5268,7 @@ CONFIG_XEN_MCE_LOG=y
 ##
 CONFIG_FS_DAX=y
 CONFIG_FILE_LOCKING=y
+CONFIG_MANDATORY_FILE_LOCKING=y
 CONFIG_TMPFS=y
 CONFIG_TMPFS_POSIX_ACL=y
 CONFIG_HUGETLBFS=y
@@ -5057,6 +5383,11 @@ CONFIG_CONFIGFS_FS=m
 # CONFIG_CRAMFS is not set
 
 ##
+## file: fs/crypto/Kconfig
+##
+CONFIG_FS_ENCRYPTION=m
+
+##
 ## file: fs/dlm/Kconfig
 ##
 CONFIG_DLM=m
@@ -5110,6 +5441,7 @@ CONFIG_F2FS_FS_POSIX_ACL=y
 CONFIG_F2FS_FS_SECURITY=y
 CONFIG_F2FS_FS_ENCRYPTION=y
 # CONFIG_F2FS_IO_TRACE is not set
+# CONFIG_F2FS_FAULT_INJECTION is not set
 
 ##
 ## file: fs/fat/Kconfig
@@ -5208,11 +5540,6 @@ CONFIG_JFS_POSIX_ACL=y
 CONFIG_JFS_SECURITY=y
 # CONFIG_JFS_DEBUG is not set
 # CONFIG_JFS_STATISTICS is not set
-
-##
-## file: fs/logfs/Kconfig
-##
-CONFIG_LOGFS=m
 
 ##
 ## file: fs/minix/Kconfig
@@ -5356,6 +5683,11 @@ CONFIG_OCFS2_DEBUG_MASKLOG=y
 ## file: fs/omfs/Kconfig
 ##
 CONFIG_OMFS_FS=m
+
+##
+## file: fs/orangefs/Kconfig
+##
+# CONFIG_ORANGEFS_FS is not set
 
 ##
 ## file: fs/overlayfs/Kconfig
@@ -5560,6 +5892,7 @@ CONFIG_BPF_SYSCALL=y
 CONFIG_SHMEM=y
 CONFIG_AIO=y
 CONFIG_ADVISE_SYSCALLS=y
+CONFIG_USERFAULTFD=y
 CONFIG_PCI_QUIRKS=y
 CONFIG_MEMBARRIER=y
 # CONFIG_EMBEDDED is not set
@@ -5591,6 +5924,7 @@ CONFIG_MODVERSIONS=y
 CONFIG_MODULE_SIG_SHA256=y
 ## end choice
 # CONFIG_MODULE_COMPRESS is not set
+# CONFIG_TRIM_UNUSED_KSYMS is not set
 
 ##
 ## file: kernel/gcov/Kconfig
@@ -5666,8 +6000,8 @@ CONFIG_BRANCH_PROFILE_NONE=y
 ## end choice
 CONFIG_STACK_TRACER=y
 CONFIG_BLK_DEV_IO_TRACE=y
-CONFIG_KPROBE_EVENT=y
-CONFIG_UPROBE_EVENT=y
+CONFIG_KPROBE_EVENTS=y
+CONFIG_UPROBE_EVENTS=y
 CONFIG_DYNAMIC_FTRACE=y
 # CONFIG_FUNCTION_PROFILER is not set
 # CONFIG_FTRACE_STARTUP_TEST is not set
@@ -5731,6 +6065,7 @@ CONFIG_DEBUG_MEMORY_INIT=y
 #. For use by selftests
 CONFIG_MEMORY_NOTIFIER_ERROR_INJECT=m
 # CONFIG_DEBUG_HIGHMEM is not set
+# CONFIG_KCOV is not set
 CONFIG_LOCKUP_DETECTOR=y
 # CONFIG_BOOTPARAM_HARDLOCKUP_PANIC is not set
 # CONFIG_BOOTPARAM_SOFTLOCKUP_PANIC is not set
@@ -5743,7 +6078,6 @@ CONFIG_SCHED_DEBUG=y
 CONFIG_SCHEDSTATS=y
 CONFIG_SCHED_STACK_END_CHECK=y
 # CONFIG_DEBUG_TIMEKEEPING is not set
-CONFIG_TIMER_STATS=y
 CONFIG_DEBUG_PREEMPT=y
 # CONFIG_DEBUG_RT_MUTEXES is not set
 # CONFIG_DEBUG_SPINLOCK is not set
@@ -5763,14 +6097,18 @@ CONFIG_DEBUG_LIST=y
 # CONFIG_DEBUG_NOTIFIERS is not set
 # CONFIG_DEBUG_CREDENTIALS is not set
 # CONFIG_SPARSE_RCU_POINTER is not set
+# CONFIG_RCU_PERF_TEST is not set
 # CONFIG_RCU_TORTURE_TEST is not set
 CONFIG_RCU_CPU_STALL_TIMEOUT=21
 # CONFIG_RCU_TRACE is not set
+# CONFIG_RCU_EQS_DEBUG is not set
+# CONFIG_DEBUG_WQ_FORCE_RR_CPU is not set
 # CONFIG_DEBUG_BLOCK_EXT_DEVT is not set
+# CONFIG_CPU_HOTPLUG_STATE_CONTROL is not set
 #. For use by selftests
 CONFIG_NOTIFIER_ERROR_INJECTION=m
-CONFIG_CPU_NOTIFIER_ERROR_INJECT=m
 CONFIG_PM_NOTIFIER_ERROR_INJECT=m
+# CONFIG_NETDEV_NOTIFIER_ERROR_INJECT is not set
 # CONFIG_FAULT_INJECTION is not set
 # CONFIG_LATENCYTOP is not set
 # CONFIG_LKDTM is not set
@@ -5787,7 +6125,10 @@ CONFIG_PM_NOTIFIER_ERROR_INJECT=m
 # CONFIG_TEST_STRING_HELPERS is not set
 # CONFIG_TEST_KSTRTOX is not set
 # CONFIG_TEST_PRINTF is not set
+# CONFIG_TEST_BITMAP is not set
+# CONFIG_TEST_UUID is not set
 # CONFIG_TEST_RHASHTABLE is not set
+# CONFIG_TEST_HASH is not set
 # CONFIG_DMA_API_DEBUG is not set
 # CONFIG_TEST_LKM is not set
 #. For use by selftests
@@ -5796,6 +6137,7 @@ CONFIG_TEST_BPF=m
 CONFIG_TEST_FIRMWARE=m
 # CONFIG_TEST_UDELAY is not set
 CONFIG_TEST_STATIC_KEYS=m
+CONFIG_BUG_ON_DATA_CORRUPTION=y
 CONFIG_STRICT_DEVMEM=y
 CONFIG_IO_STRICT_DEVMEM=y
 
@@ -5820,6 +6162,11 @@ CONFIG_IO_STRICT_DEVMEM=y
 # CONFIG_KMEMCHECK is not set
 
 ##
+## file: lib/Kconfig.ubsan
+##
+# CONFIG_UBSAN is not set
+
+##
 ## file: lib/xz/Kconfig
 ##
 #. These are enabled again by arch config, matching the defaults
@@ -5835,6 +6182,7 @@ CONFIG_IO_STRICT_DEVMEM=y
 ## file: mm/Kconfig
 ##
 CONFIG_MEMORY_HOTPLUG=y
+# CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE is not set
 CONFIG_MEMORY_HOTREMOVE=y
 CONFIG_BALLOON_COMPACTION=y
 CONFIG_COMPACTION=y
@@ -5856,11 +6204,16 @@ CONFIG_ZSWAP=y
 CONFIG_ZBUD=y
 CONFIG_ZSMALLOC=m
 # CONFIG_PGTABLE_MAPPING is not set
+# CONFIG_DEFERRED_STRUCT_PAGE_INIT is not set
 
 ##
 ## file: mm/Kconfig.debug
 ##
-# CONFIG_PAGE_EXTENSION is not set
+CONFIG_PAGE_EXTENSION=y
+CONFIG_PAGE_POISONING=y
+CONFIG_PAGE_POISONING_NO_SANITY=y
+# CONFIG_PAGE_POISONING_ZERO is not set
+# CONFIG_DEBUG_PAGE_REF is not set
 
 ##
 ## file: net/Kconfig
@@ -5880,11 +6233,13 @@ CONFIG_NET_PKTGEN=m
 CONFIG_NET_DROP_MONITOR=m
 CONFIG_WIRELESS=y
 CONFIG_LWTUNNEL=y
+CONFIG_NET_DEVLINK=m
 
 ##
 ## file: net/6lowpan/Kconfig
 ##
 CONFIG_6LOWPAN=m
+# CONFIG_6LOWPAN_DEBUGFS is not set
 CONFIG_6LOWPAN_NHC=m
 CONFIG_6LOWPAN_NHC_DEST=m
 CONFIG_6LOWPAN_NHC_FRAGMENT=m
@@ -5893,6 +6248,12 @@ CONFIG_6LOWPAN_NHC_IPV6=m
 CONFIG_6LOWPAN_NHC_MOBILITY=m
 CONFIG_6LOWPAN_NHC_ROUTING=m
 CONFIG_6LOWPAN_NHC_UDP=m
+CONFIG_6LOWPAN_GHC_EXT_HDR_HOP=m
+CONFIG_6LOWPAN_GHC_UDP=m
+CONFIG_6LOWPAN_GHC_ICMPV6=m
+CONFIG_6LOWPAN_GHC_EXT_HDR_DEST=m
+CONFIG_6LOWPAN_GHC_EXT_HDR_FRAG=m
+CONFIG_6LOWPAN_GHC_EXT_HDR_ROUTE=m
 
 ##
 ## file: net/8021q/Kconfig
@@ -5924,10 +6285,12 @@ CONFIG_ATM_BR2684=m
 ## file: net/batman-adv/Kconfig
 ##
 CONFIG_BATMAN_ADV=m
+# CONFIG_BATMAN_ADV_BATMAN_V is not set
 CONFIG_BATMAN_ADV_BLA=y
 CONFIG_BATMAN_ADV_DAT=y
 CONFIG_BATMAN_ADV_NC=y
 CONFIG_BATMAN_ADV_MCAST=y
+CONFIG_BATMAN_ADV_DEBUGFS=y
 # CONFIG_BATMAN_ADV_DEBUG is not set
 
 ##
@@ -5938,6 +6301,7 @@ CONFIG_BT_BREDR=y
 CONFIG_BT_HS=y
 CONFIG_BT_LE=y
 CONFIG_BT_6LOWPAN=m
+# CONFIG_BT_LEDS is not set
 # CONFIG_BT_SELFTEST is not set
 CONFIG_BT_DEBUGFS=y
 
@@ -6096,6 +6460,7 @@ CONFIG_INET_XFRM_MODE_TUNNEL=m
 CONFIG_INET_XFRM_MODE_BEET=m
 CONFIG_INET_DIAG=m
 CONFIG_INET_UDP_DIAG=m
+CONFIG_INET_DIAG_DESTROY=y
 CONFIG_TCP_CONG_ADVANCED=y
 CONFIG_TCP_CONG_BIC=m
 CONFIG_TCP_CONG_CUBIC=y
@@ -6104,6 +6469,7 @@ CONFIG_TCP_CONG_HTCP=m
 CONFIG_TCP_CONG_HSTCP=m
 CONFIG_TCP_CONG_HYBLA=m
 CONFIG_TCP_CONG_VEGAS=m
+CONFIG_TCP_CONG_NV=m
 CONFIG_TCP_CONG_SCALABLE=m
 CONFIG_TCP_CONG_LP=m
 CONFIG_TCP_CONG_VENO=m
@@ -6127,6 +6493,7 @@ CONFIG_TCP_MD5SIG=y
 ## file: net/ipv4/netfilter/Kconfig
 ##
 CONFIG_NF_CONNTRACK_IPV4=m
+CONFIG_NF_SOCKET_IPV4=m
 CONFIG_NF_TABLES_IPV4=m
 CONFIG_NFT_CHAIN_ROUTE_IPV4=m
 CONFIG_NFT_DUP_IPV4=m
@@ -6171,6 +6538,7 @@ CONFIG_INET6_AH=m
 CONFIG_INET6_ESP=m
 CONFIG_INET6_IPCOMP=m
 CONFIG_IPV6_MIP6=y
+CONFIG_IPV6_ILA=m
 CONFIG_INET6_XFRM_MODE_TRANSPORT=m
 CONFIG_INET6_XFRM_MODE_TUNNEL=m
 CONFIG_INET6_XFRM_MODE_BEET=m
@@ -6190,6 +6558,7 @@ CONFIG_IPV6_PIMSM_V2=y
 ## file: net/ipv6/netfilter/Kconfig
 ##
 CONFIG_NF_CONNTRACK_IPV6=m
+CONFIG_NF_SOCKET_IPV6=m
 CONFIG_NF_TABLES_IPV6=m
 CONFIG_NFT_CHAIN_ROUTE_IPV6=m
 CONFIG_NFT_DUP_IPV6=m
@@ -6219,6 +6588,11 @@ CONFIG_IP6_NF_SECURITY=m
 CONFIG_IP6_NF_NAT=m
 CONFIG_IP6_NF_TARGET_MASQUERADE=m
 CONFIG_IP6_NF_TARGET_NPT=m
+
+##
+## file: net/kcm/Kconfig
+##
+# CONFIG_AF_KCM is not set
 
 ##
 ## file: net/l2tp/Kconfig
@@ -6269,6 +6643,11 @@ CONFIG_MPLS_ROUTING=m
 CONFIG_MPLS_IPTUNNEL=m
 
 ##
+## file: net/ncsi/Kconfig
+##
+# CONFIG_NET_NCSI is not set
+
+##
 ## file: net/netfilter/Kconfig
 ##
 CONFIG_NETFILTER_INGRESS=y
@@ -6283,9 +6662,9 @@ CONFIG_NF_CONNTRACK_PROCFS=y
 CONFIG_NF_CONNTRACK_EVENTS=y
 CONFIG_NF_CONNTRACK_TIMEOUT=y
 CONFIG_NF_CONNTRACK_TIMESTAMP=y
-CONFIG_NF_CT_PROTO_DCCP=m
-CONFIG_NF_CT_PROTO_SCTP=m
-CONFIG_NF_CT_PROTO_UDPLITE=m
+CONFIG_NF_CT_PROTO_DCCP=y
+CONFIG_NF_CT_PROTO_SCTP=y
+CONFIG_NF_CT_PROTO_UDPLITE=y
 CONFIG_NF_CONNTRACK_AMANDA=m
 CONFIG_NF_CONNTRACK_FTP=m
 CONFIG_NF_CONNTRACK_H323=m
@@ -6305,6 +6684,7 @@ CONFIG_NF_TABLES_INET=m
 CONFIG_NF_TABLES_NETDEV=m
 CONFIG_NFT_EXTHDR=m
 CONFIG_NFT_META=m
+CONFIG_NFT_NUMGEN=m
 CONFIG_NFT_CT=m
 CONFIG_NFT_SET_RBTREE=m
 CONFIG_NFT_SET_HASH=m
@@ -6315,6 +6695,7 @@ CONFIG_NFT_MASQ=m
 CONFIG_NFT_REDIR=m
 CONFIG_NFT_NAT=m
 CONFIG_NFT_QUEUE=m
+CONFIG_NFT_QUOTA=m
 CONFIG_NFT_REJECT=m
 CONFIG_NFT_COMPAT=m
 CONFIG_NFT_HASH=m
@@ -6503,13 +6884,14 @@ CONFIG_RDS_TCP=m
 ##
 CONFIG_RFKILL=m
 CONFIG_RFKILL_INPUT=y
-# CONFIG_RFKILL_REGULATOR is not set
 # CONFIG_RFKILL_GPIO is not set
 
 ##
 ## file: net/rxrpc/Kconfig
 ##
 CONFIG_AF_RXRPC=m
+CONFIG_AF_RXRPC_IPV6=y
+# CONFIG_AF_RXRPC_INJECT_LOSS is not set
 # CONFIG_AF_RXRPC_DEBUG is not set
 CONFIG_RXKAD=y
 
@@ -6555,6 +6937,7 @@ CONFIG_NET_CLS_FLOW=m
 CONFIG_NET_CLS_CGROUP=m
 CONFIG_NET_CLS_BPF=m
 CONFIG_NET_CLS_FLOWER=m
+CONFIG_NET_CLS_MATCHALL=m
 CONFIG_NET_EMATCH=y
 CONFIG_NET_EMATCH_STACK=32
 CONFIG_NET_EMATCH_CMP=m
@@ -6578,6 +6961,12 @@ CONFIG_NET_ACT_CSUM=m
 CONFIG_NET_ACT_VLAN=m
 CONFIG_NET_ACT_BPF=m
 CONFIG_NET_ACT_CONNMARK=m
+CONFIG_NET_ACT_SKBMOD=m
+CONFIG_NET_ACT_IFE=m
+CONFIG_NET_ACT_TUNNEL_KEY=m
+CONFIG_NET_IFE_SKBMARK=m
+CONFIG_NET_IFE_SKBPRIO=m
+CONFIG_NET_IFE_SKBTCINDEX=m
 CONFIG_NET_CLS_IND=y
 
 ##
@@ -6602,6 +6991,11 @@ CONFIG_SUNRPC_DEBUG=y
 CONFIG_SUNRPC_XPRT_RDMA=m
 
 ##
+## file: net/switchdev/Kconfig
+##
+# CONFIG_NET_SWITCHDEV is not set
+
+##
 ## file: net/tipc/Kconfig
 ##
 CONFIG_TIPC=m
@@ -6613,6 +7007,13 @@ CONFIG_TIPC_MEDIA_UDP=y
 ##
 CONFIG_UNIX=y
 CONFIG_UNIX_DIAG=m
+
+##
+## file: net/vmw_vsock/Kconfig
+##
+CONFIG_VSOCKETS=m
+# CONFIG_VMWARE_VMCI_VSOCKETS is not set
+CONFIG_VIRTIO_VSOCKETS=m
 
 ##
 ## file: net/wimax/Kconfig
@@ -6662,11 +7063,11 @@ CONFIG_SECURITY=y
 CONFIG_SECURITY_NETWORK=y
 CONFIG_SECURITY_NETWORK_XFRM=y
 # CONFIG_SECURITY_PATH is not set
-CONFIG_SECURITY_SECURELEVEL=y
 # CONFIG_INTEL_TXT is not set
 CONFIG_LSM_MMAP_MIN_ADDR=32768
 CONFIG_HARDENED_USERCOPY=y
 # CONFIG_HARDENED_USERCOPY_PAGESPAN is not set
+CONFIG_LOCK_DOWN_KERNEL=y
 ## choice: Default security module
 CONFIG_DEFAULT_SECURITY_DAC=y
 ## end choice
@@ -6677,12 +7078,14 @@ CONFIG_DEFAULT_SECURITY_DAC=y
 CONFIG_SECURITY_APPARMOR=y
 CONFIG_SECURITY_APPARMOR_BOOTPARAM_VALUE=1
 CONFIG_SECURITY_APPARMOR_HASH=y
+CONFIG_SECURITY_APPARMOR_HASH_DEFAULT=y
 
 ##
 ## file: security/integrity/Kconfig
 ##
 CONFIG_INTEGRITY=y
 # CONFIG_INTEGRITY_SIGNATURE is not set
+CONFIG_INTEGRITY_TRUSTED_KEYRING=y
 CONFIG_INTEGRITY_AUDIT=y
 
 ##
@@ -6693,7 +7096,20 @@ CONFIG_INTEGRITY_AUDIT=y
 ##
 ## file: security/integrity/ima/Kconfig
 ##
-# CONFIG_IMA is not set
+CONFIG_IMA=y
+## choice: Default integrity hash algorithm
+# CONFIG_IMA_DEFAULT_HASH_SHA1 is not set
+CONFIG_IMA_DEFAULT_HASH_SHA256=y
+# CONFIG_IMA_DEFAULT_HASH_SHA512 is not set
+# CONFIG_IMA_DEFAULT_HASH_WP512 is not set
+## end choice
+# CONFIG_IMA_WRITE_POLICY is not set
+# CONFIG_IMA_READ_POLICY is not set
+CONFIG_IMA_APPRAISE=y
+CONFIG_IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY=y
+CONFIG_IMA_BLACKLIST_KEYRING=y
+# CONFIG_IMA_LOAD_X509 is not set
+# CONFIG_IMA_APPRAISE_SIGNED_INIT is not set
 
 ##
 ## file: security/keys/Kconfig
@@ -6705,6 +7121,11 @@ CONFIG_KEYS=y
 # CONFIG_ENCRYPTED_KEYS is not set
 
 ##
+## file: security/loadpin/Kconfig
+##
+# CONFIG_SECURITY_LOADPIN is not set
+
+##
 ## file: security/selinux/Kconfig
 ##
 CONFIG_SECURITY_SELINUX=y
@@ -6712,7 +7133,7 @@ CONFIG_SECURITY_SELINUX=y
 # CONFIG_SECURITY_SELINUX_DISABLE is not set
 CONFIG_SECURITY_SELINUX_DEVELOP=y
 CONFIG_SECURITY_SELINUX_AVC_STATS=y
-CONFIG_SECURITY_SELINUX_CHECKREQPROT_VALUE=1
+CONFIG_SECURITY_SELINUX_CHECKREQPROT_VALUE=0
 
 ##
 ## file: security/smack/Kconfig
@@ -6785,6 +7206,11 @@ CONFIG_SND_FIREWORKS=m
 CONFIG_SND_BEBOB=m
 CONFIG_SND_FIREWIRE_DIGI00X=m
 CONFIG_SND_FIREWIRE_TASCAM=m
+
+##
+## file: sound/hda/Kconfig
+##
+CONFIG_SND_HDA_PREALLOC_SIZE=2048
 
 ##
 ## file: sound/isa/Kconfig
@@ -6861,6 +7287,11 @@ CONFIG_SND_PDAUDIOCF=m
 # CONFIG_SND_SOC is not set
 
 ##
+## file: sound/soc/amd/Kconfig
+##
+# CONFIG_SND_SOC_AMD_ACP is not set
+
+##
 ## file: sound/soc/atmel/Kconfig
 ##
 # CONFIG_SND_ATMEL_SOC is not set
@@ -6868,14 +7299,18 @@ CONFIG_SND_PDAUDIOCF=m
 ##
 ## file: sound/soc/codecs/Kconfig
 ##
+# CONFIG_SND_SOC_AC97_CODEC is not set
 # CONFIG_SND_SOC_ADAU1701 is not set
+# CONFIG_SND_SOC_ADAU7002 is not set
 # CONFIG_SND_SOC_AK4104 is not set
 # CONFIG_SND_SOC_AK4554 is not set
 # CONFIG_SND_SOC_AK4613 is not set
 # CONFIG_SND_SOC_AK4642 is not set
 # CONFIG_SND_SOC_AK5386 is not set
 # CONFIG_SND_SOC_ALC5623 is not set
+# CONFIG_SND_SOC_BT_SCO is not set
 # CONFIG_SND_SOC_CS35L32 is not set
+# CONFIG_SND_SOC_CS35L33 is not set
 # CONFIG_SND_SOC_CS42L51_I2C is not set
 # CONFIG_SND_SOC_CS42L52 is not set
 # CONFIG_SND_SOC_CS42L56 is not set
@@ -6886,13 +7321,21 @@ CONFIG_SND_PDAUDIOCF=m
 # CONFIG_SND_SOC_CS4271_SPI is not set
 # CONFIG_SND_SOC_CS42XX8_I2C is not set
 # CONFIG_SND_SOC_CS4349 is not set
-# CONFIG_SND_SOC_ES8328 is not set
+# CONFIG_SND_SOC_CS53L30 is not set
+# CONFIG_SND_SOC_ES8328_I2C is not set
+# CONFIG_SND_SOC_ES8328_SPI is not set
 # CONFIG_SND_SOC_GTM601 is not set
+# CONFIG_SND_SOC_INNO_RK3036 is not set
+# CONFIG_SND_SOC_MAX98504 is not set
+# CONFIG_SND_SOC_MAX9860 is not set
 # CONFIG_SND_SOC_PCM1681 is not set
 # CONFIG_SND_SOC_PCM179X_I2C is not set
 # CONFIG_SND_SOC_PCM179X_SPI is not set
+# CONFIG_SND_SOC_PCM3168A_I2C is not set
+# CONFIG_SND_SOC_PCM3168A_SPI is not set
 # CONFIG_SND_SOC_PCM512x_I2C is not set
 # CONFIG_SND_SOC_PCM512x_SPI is not set
+# CONFIG_SND_SOC_RT5616 is not set
 # CONFIG_SND_SOC_RT5631 is not set
 # CONFIG_SND_SOC_SGTL5000 is not set
 # CONFIG_SND_SOC_SIRF_AUDIO_CODEC is not set
@@ -6906,6 +7349,7 @@ CONFIG_SND_PDAUDIOCF=m
 # CONFIG_SND_SOC_TAS2552 is not set
 # CONFIG_SND_SOC_TAS5086 is not set
 # CONFIG_SND_SOC_TAS571X is not set
+# CONFIG_SND_SOC_TAS5720 is not set
 # CONFIG_SND_SOC_TFA9879 is not set
 # CONFIG_SND_SOC_TLV320AIC23_I2C is not set
 # CONFIG_SND_SOC_TLV320AIC23_SPI is not set
@@ -6927,8 +7371,12 @@ CONFIG_SND_PDAUDIOCF=m
 # CONFIG_SND_SOC_WM8804_I2C is not set
 # CONFIG_SND_SOC_WM8804_SPI is not set
 # CONFIG_SND_SOC_WM8903 is not set
+# CONFIG_SND_SOC_WM8960 is not set
 # CONFIG_SND_SOC_WM8962 is not set
+# CONFIG_SND_SOC_WM8974 is not set
 # CONFIG_SND_SOC_WM8978 is not set
+# CONFIG_SND_SOC_WM8985 is not set
+# CONFIG_SND_SOC_NAU8810 is not set
 # CONFIG_SND_SOC_TPA6130A2 is not set
 
 ##
@@ -6950,6 +7398,11 @@ CONFIG_SND_PDAUDIOCF=m
 ## file: sound/soc/generic/Kconfig
 ##
 # CONFIG_SND_SIMPLE_CARD is not set
+
+##
+## file: sound/soc/img/Kconfig
+##
+# CONFIG_SND_SOC_IMG is not set
 
 ##
 ## file: sound/soc/sunxi/Kconfig

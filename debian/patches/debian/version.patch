@@ -48,8 +48,8 @@ are set.
 --- a/arch/x86/um/sysrq_64.c
 +++ b/arch/x86/um/sysrq_64.c
 @@ -8,6 +8,7 @@
- #include <linux/module.h>
  #include <linux/sched.h>
+ #include <linux/sched/debug.h>
  #include <linux/utsname.h>
 +#include <generated/package.h>
  #include <asm/current.h>
@@ -99,7 +99,7 @@ are set.
  
  #include <asm/pgtable.h>
  #include <asm/io.h>
-@@ -1340,8 +1341,9 @@ void show_regs(struct pt_regs * regs)
+@@ -1328,8 +1329,9 @@ void show_regs(struct pt_regs * regs)
  
  	printk("NIP: "REG" LR: "REG" CTR: "REG"\n",
  	       regs->nip, regs->link, regs->ctr);
@@ -114,14 +114,14 @@ are set.
 --- a/kernel/printk/printk.c
 +++ b/kernel/printk/printk.c
 @@ -45,6 +45,7 @@
- #include <linux/utsname.h>
- #include <linux/ctype.h>
- #include <linux/uio.h>
+ #include <linux/sched/clock.h>
+ #include <linux/sched/debug.h>
+ #include <linux/sched/task_stack.h>
 +#include <generated/package.h>
  
- #include <asm/uaccess.h>
+ #include <linux/uaccess.h>
  #include <asm/sections.h>
-@@ -3282,11 +3283,12 @@ void __init dump_stack_set_arch_desc(con
+@@ -3117,11 +3118,12 @@ void __init dump_stack_set_arch_desc(con
   */
  void dump_stack_print_info(const char *log_lvl)
  {
