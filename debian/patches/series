@@ -99,4 +99,4 @@ bugfix/all/cpupower-fix-checks-for-cpu-existence.patch
 
 # Linaro
 linaro/0001-arm64-prefer-ACPI-by-default.patch
-linaro/0001-DISTROHACK-acpi-spcr-remove-baud-rate-handling.patch
+#linaro/0001-DISTROHACK-acpi-spcr-remove-baud-rate-handling.patch
