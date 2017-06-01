@@ -9,7 +9,7 @@ alternative may allow subverting module signing.
 ---
 --- a/kernel/module.c
 +++ b/kernel/module.c
-@@ -1301,9 +1301,8 @@ static int check_version(Elf_Shdr *sechd
+@@ -1316,9 +1316,8 @@
  		goto bad_version;
  	}
  

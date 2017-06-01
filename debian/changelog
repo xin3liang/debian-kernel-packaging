@@ -1,3 +1,9 @@
+linux (4.12~rc2-1) UNRELEASED; urgency=medium
+
+  * Non-maintainer upload.
+
+ -- Riku Voipio <riku.voipio@linaro.org>  Thu, 01 Jun 2017 13:13:30 +0300
+
 linux (4.11-1~exp3) UNRELEASED; urgency=medium
 
   * [armel] udeb: Add af_packet. firmware_class, nls_base to kernel-image

@@ -15,7 +15,7 @@ Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
 
 --- a/mm/memtest.c
 +++ b/mm/memtest.c
-@@ -26,6 +26,10 @@ static u64 patterns[] __initdata = {
+@@ -26,6 +26,10 @@
  
  static void __init reserve_bad_mem(u64 pattern, phys_addr_t start_bad, phys_addr_t end_bad)
  {

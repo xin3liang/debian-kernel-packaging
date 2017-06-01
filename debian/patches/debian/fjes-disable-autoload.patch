@@ -13,7 +13,7 @@ auto-loading.
 ---
 --- a/drivers/net/fjes/fjes_main.c
 +++ b/drivers/net/fjes/fjes_main.c
-@@ -81,7 +81,7 @@ static const struct acpi_device_id fjes_
+@@ -83,7 +83,7 @@
  	{ACPI_MOTHERBOARD_RESOURCE_HID, 0},
  	{"", 0},
  };
