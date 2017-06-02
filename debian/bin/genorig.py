@@ -76,7 +76,7 @@ class Main(object):
                                         'tag', '-v', self.tag],
                                         cwd=input_repo)
         if verify_proc.wait():
-            raise RuntimeError("GPG tag verification failed")
+            self.log("GPG verify failed  %s from %s\n" % (self.tag, input_repo))
 
         archive_proc = subprocess.Popen(['git', 'archive', '--format=tar',
                                          '--prefix=%s/' % self.orig, self.tag],
