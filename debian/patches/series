@@ -97,6 +97,3 @@ bugfix/all/tools-build-remove-bpf-run-time-check-at-build-time.patch
 bugfix/all/cpupower-bump-soname-version.patch
 bugfix/all/cpupower-fix-checks-for-cpu-existence.patch
 
-# Linaro
-linaro/0001-arm64-prefer-ACPI-by-default.patch
-#linaro/0001-DISTROHACK-acpi-spcr-remove-baud-rate-handling.patch
