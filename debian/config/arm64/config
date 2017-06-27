@@ -92,6 +92,11 @@ CONFIG_HISILICON_LPC=y
 CONFIG_TEGRA_ACONNECT=y
 
 ##
+## file: drivers/char/Kconfig
+##
+# CONFIG_DEVMEM is not set
+
+##
 ## file: drivers/char/hw_random/Kconfig
 ##
 CONFIG_HW_RANDOM_BCM2835=m
