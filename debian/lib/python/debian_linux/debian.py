@@ -126,8 +126,8 @@ class VersionLinux(Version):
     )
 )?
 (?:
-    \.linaro\.
-    (?P<linaro>
+    \.estuary\.
+    (?P<estuary>
         \d+
     )
 )?
@@ -168,7 +168,7 @@ $
         else:
             self.linux_upstream = d['version']
         self.linux_upstream_full = self.linux_upstream + d['update']
-        self.linux_linaro = d['linaro']
+        self.linux_estuary = d['estuary']
         self.linux_revision_experimental = match.group('revision_experimental') and True
         self.linux_revision_security = match.group('revision_security') and True
         self.linux_revision_backports = match.group('revision_backports') and True

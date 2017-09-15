@@ -27,11 +27,11 @@ class Main(object):
         if override_version:
             version = VersionLinux('%s-0' % override_version)
 
-        self.version_linaro = version.linux_linaro
-        if self.version_linaro is None:
-            self.version_linaro = '0'
+        self.version_estuary = version.linux_estuary
+        if self.version_estuary is None:
+            self.version_estuary = '0'
 
-        self.log('Using source name %s, version %s, linaro %s\n' % (source, version.upstream, self.version_linaro))
+        self.log('Using source name %s, version %s, estuary %s\n' % (source, version.upstream, self.version_estuary))
 
         self.orig = '%s-%s' % (source, version.upstream)
         self.orig_tar = '%s_%s.orig.tar.xz' % (source, version.upstream)
